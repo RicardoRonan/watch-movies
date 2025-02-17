@@ -1,6 +1,9 @@
 <script setup>
 import { getMovies } from "./api/movies.js";
 import { ref, watchEffect } from "vue";
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 const moviesData = ref(null);
 const fetchMovies = async () => {
@@ -9,11 +12,13 @@ const fetchMovies = async () => {
     moviesData.value = data;
     console.log("Movie data:", moviesData.value);
   } catch (error) {
-    console.error("Error fetching weather data:", error);
+    console.error("Error fetching movie data:", error);
   }
 };
 fetchMovies();
-
+function viewMovie() {
+      router.push({ path: "/movie", name : "MovieView"});
+    };
 watchEffect(() => {
   if (moviesData.value) {
     console.log("Movie data:", moviesData.value);
@@ -26,7 +31,7 @@ watchEffect(() => {
 
 <template>
   <div>
-    <div class="movie-card" v-for="movie in moviesData.result">
+    <div class="movie-card" @click="viewMovie()" v-for="movie in moviesData.result">
       <h2>{{ movie.title }}</h2>
       <p>{{ movie.description }}</p>
    <a :href="movie.embed_url">{{ movie.embed_url }}</a>

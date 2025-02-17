@@ -3,11 +3,9 @@ import App from '../App.vue'
 import MovieView from '../components/MovieView.vue'
 
 const routes = [
-  { path: '/', App },
-  { path: '/movie', component: MovieView },
+  { path: '/', component: App , name : 'Home'},
+  { path: '/movie', component: MovieView , name : 'MovieView' },
 ]
 
-const router = createRouter({
-  history: createMemoryHistory(),
-  routes,
-}) 
+
+export default routes;
